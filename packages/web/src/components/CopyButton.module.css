@@ -1,0 +1,15 @@
+.btn {
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn:hover {
+  background: rgba(232, 168, 56, 0.12);
+  color: var(--accent);
+}

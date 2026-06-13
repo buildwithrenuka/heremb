@@ -1,0 +1,33 @@
+{
+  "name": "heramb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The key to effortless deployment across any platform",
+  "workspaces": [
+    "packages/core",
+    "packages/cli",
+    "packages/web",
+    "packages/api",
+    "packages/providers/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @heramb/core && npm run build -w @heramb/provider-railway -w @heramb/provider-vercel -w @heramb/provider-upstash && npm run build -w @heramb/cli && npm run build -w @heramb/api && npm run build -w @heramb/web",
+    "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "npm run dev -w @heramb/web",
+    "dev:api": "npm run dev -w @heramb/api",
+    "dev:all": "npm run dev",
+    "dev:cli": "npm run dev -w @heramb/cli",
+    "heramb": "node packages/cli/dist/index.js",
+    "test": "npm run build && tsx --test tests/**/*.test.ts",
+    "test:deploy": "npm run build && tsx tests/demo-deploy.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

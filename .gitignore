@@ -1,0 +1,13 @@
+_ref/
+node_modules/
+dist/
+*.log
+.env
+.env.local
+.DS_Store
+*.tsbuildinfo
+# Chaabi — secrets (do not commit)
+.env.*
+!.env.example
+.chaabi/
+keys.json

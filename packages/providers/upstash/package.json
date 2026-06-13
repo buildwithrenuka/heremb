@@ -1,0 +1,25 @@
+{
+  "name": "@heramb/provider-upstash",
+  "version": "0.1.0",
+  "description": "Upstash lock — Redis provisioning for Heramb",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": ["dist"],
+  "license": "MIT",
+  "dependencies": {
+    "@heramb/core": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

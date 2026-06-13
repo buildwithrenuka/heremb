@@ -1,0 +1,272 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.subtitle strong {
+  color: var(--accent);
+}
+
+.deployBtn {
+  padding: 0.65rem 1.25rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.deployBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.deployBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.pipeline,
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+}
+
+.stepList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stepItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem 0.75rem;
+  align-items: baseline;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  transition: background 0.2s;
+}
+
+.stepItem[data-status='running'] {
+  background: rgba(232, 168, 56, 0.08);
+}
+
+.stepItem[data-status='done'] {
+  background: rgba(107, 201, 138, 0.06);
+}
+
+.stepIndex {
+  color: var(--text-muted);
+}
+
+.stepLabel {
+  color: var(--text);
+}
+
+.stepStatus {
+  color: var(--text-muted);
+}
+
+.stepItem[data-status='done'] .stepStatus {
+  color: var(--success);
+}
+
+.stepItem[data-status='running'] .stepStatus {
+  color: var(--accent);
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.stepValue {
+  grid-column: 2 / -1;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding-left: 0;
+}
+
+.unlocked {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.unlocked > span:first-child {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.serviceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.serviceItem {
+  padding: 0.85rem;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.serviceHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.serviceName {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.serviceStatus {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(107, 201, 138, 0.15);
+  color: var(--success);
+}
+
+.serviceProvider {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.serviceUrl {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  word-break: break-all;
+}
+
+.serviceUrl:hover {
+  text-decoration: underline;
+}
+
+.cmdList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cmd {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.configSnippet {
+  margin: 0;
+  padding: 1rem;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+.demoNote {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.demoNote code {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 1rem;
+  }
+}

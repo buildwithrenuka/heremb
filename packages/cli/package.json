@@ -1,0 +1,33 @@
+{
+  "name": "@heramb/cli",
+  "version": "0.1.0",
+  "description": "Heramb CLI — deploy orchestration across any platform",
+  "type": "module",
+  "bin": {
+    "heramb": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "files": ["dist"],
+  "license": "MIT",
+  "dependencies": {
+    "@heramb/core": "*",
+    "@heramb/provider-railway": "*",
+    "@heramb/provider-upstash": "*",
+    "@heramb/provider-vercel": "*",
+    "chalk": "^5.4.1",
+    "commander": "^12.1.0",
+    "conf": "^13.0.1",
+    "dotenv": "^16.4.7",
+    "inquirer": "^12.2.0",
+    "ora": "^8.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

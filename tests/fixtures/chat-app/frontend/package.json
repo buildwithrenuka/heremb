@@ -1,0 +1,9 @@
+{
+  "name": "chat-frontend",
+  "private": true,
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "socket.io-client": "^4.8.0"
+  }
+}

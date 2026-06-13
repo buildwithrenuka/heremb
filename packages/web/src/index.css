@@ -1,0 +1,60 @@
+:root {
+  --bg: #0f0d0a;
+  --bg-elevated: #1a1612;
+  --bg-card: #221c16;
+  --border: rgba(255, 200, 120, 0.12);
+  --text: #f5ebe0;
+  --text-muted: #a89888;
+  --accent: #e8a838;
+  --accent-glow: rgba(232, 168, 56, 0.25);
+  --accent-soft: #c4892a;
+  --success: #6bc98a;
+  --error: #e86a6a;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --radius: 12px;
+  --radius-lg: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+code,
+pre {
+  font-family: var(--mono);
+}
+
+::selection {
+  background: var(--accent-glow);
+  color: var(--text);
+}

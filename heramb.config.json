@@ -1,0 +1,40 @@
+{
+  "project": "heramb",
+  "services": {
+    "backend": {
+      "provider": "railway",
+      "path": "./packages/api",
+      "needs": [],
+      "produces": [
+        "BACKEND_URL"
+      ]
+    },
+    "frontend": {
+      "provider": "vercel",
+      "path": "./packages/web",
+      "needs": [
+        "VITE_API_URL"
+      ],
+      "produces": [
+        "FRONTEND_URL"
+      ]
+    },
+    "backend-cors": {
+      "action": "patch-env",
+      "target": "backend",
+      "vars": {
+        "WEB_URL": "FRONTEND_URL"
+      },
+      "then": "redeploy"
+    }
+  },
+  "wsConfig": {
+    "pingInterval": 25000,
+    "transport": "websocket-only"
+  },
+  "env": {
+    "manual": [
+      "JWT_SECRET"
+    ]
+  }
+}
