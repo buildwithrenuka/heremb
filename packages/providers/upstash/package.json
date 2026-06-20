@@ -1,6 +1,6 @@
 {
-  "name": "@heramb/provider-upstash",
-  "version": "0.1.0",
+  "name": "@heramb1/provider-upstash",
+  "version": "0.1.1",
   "description": "Upstash lock — Redis provisioning for Heramb",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,8 +16,20 @@
   },
   "files": ["dist"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/providers/upstash"
+  },
+  "keywords": ["deploy", "upstash", "redis", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "@heramb/core": "*"
+    "@heramb1/core": "0.1.1"
   },
   "devDependencies": {
     "typescript": "^5.7.2"

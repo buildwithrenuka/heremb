@@ -1,3 +1,6 @@
+import { execSync } from 'node:child_process';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { extname, join, relative, resolve } from 'node:path';
 import type {
   DeployOptions,
   DeployResult,
@@ -5,13 +8,33 @@ import type {
   EnvVarResult,
   ProviderLock,
   StatusResult,
-} from '@heramb/core';
+} from '@heramb1/core';
 
 const VERCEL_API = 'https://api.vercel.com';
+
+const TEXT_EXTENSIONS = new Set(['.html', '.css', '.js', '.json', '.svg', '.txt', '.map', '.webmanifest']);
 
 export interface VercelLockOptions {
   token: string;
   teamId?: string;
+}
+
+interface VercelFile {
+  file: string;
+  data: string;
+  encoding?: 'base64' | 'utf-8';
+}
+
+interface VercelProject {
+  id: string;
+  name: string;
+  link?: {
+    type: string;
+    repo?: string;
+    repoId?: number;
+    org?: string;
+    productionBranch?: string;
+  };
 }
 
 export class VercelLock implements ProviderLock {
@@ -36,18 +59,24 @@ export class VercelLock implements ProviderLock {
   }
 
   async deploy(options: DeployOptions): Promise<DeployResult> {
-    const { projectId, serviceId, envVars } = options;
-    const projectName = projectId ?? serviceId ?? options.name;
+    const projectName = options.projectId ?? options.serviceId ?? options.name;
 
     if (!projectName) {
       throw new Error('Vercel deploy requires projectId or name in heramb.config.json');
     }
 
-    if (envVars) {
-      await this.setEnvVars(projectName, envVars);
+    const rootDirectory = options.path?.replace(/^\.\//, '');
+
+    await this.ensureProject(projectName, { framework: 'vite', rootDirectory });
+
+    if (options.envVars) {
+      await this.setEnvVars(projectName, options.envVars);
     }
 
-    const deployment = await this.createDeployment(projectName);
+    const deployment =
+      (await this.tryDeployFromGit(projectName)) ??
+      (await this.deployFromLocalBuild(projectName, options.path ?? '.', options.envVars));
+
     const url = await this.waitForDeployment(deployment.id);
 
     return {
@@ -92,7 +121,7 @@ export class VercelLock implements ProviderLock {
             body: JSON.stringify({
               key,
               value,
-              type: key.startsWith('NEXT_PUBLIC_') ? 'plain' : 'encrypted',
+              type: isPlainEnvVar(key) ? 'plain' : 'encrypted',
               target: ['production', 'preview', 'development'],
             }),
           }
@@ -100,7 +129,6 @@ export class VercelLock implements ProviderLock {
 
         if (!res.ok) {
           const err = await res.text();
-          // Upsert: try PATCH if env var exists
           if (res.status === 409 || err.includes('already exists')) {
             await this.updateEnvVar(projectId, key, value);
           } else {
@@ -186,28 +214,148 @@ export class VercelLock implements ProviderLock {
     return data.name;
   }
 
-  private async createDeployment(projectName: string): Promise<{ id: string }> {
+  private async getProject(projectName: string): Promise<VercelProject | null> {
+    const res = await fetch(`${VERCEL_API}/v9/projects/${projectName}${this.teamQuery()}`, {
+      headers: this.headers(),
+    });
+    if (!res.ok) return null;
+    return res.json() as Promise<VercelProject>;
+  }
+
+  /** Redeploy from Git when the Vercel project is linked to a repo. */
+  private async tryDeployFromGit(projectName: string): Promise<{ id: string } | null> {
+    const project = await this.getProject(projectName);
+    if (!project?.link || project.link.type !== 'github' || !project.link.repoId) {
+      return null;
+    }
+
     const res = await fetch(`${VERCEL_API}/v13/deployments${this.teamQuery()}`, {
       method: 'POST',
       headers: this.headers(),
       body: JSON.stringify({
         name: projectName,
-        project: projectName,
+        project: project.id,
         target: 'production',
-        gitSource: undefined,
+        gitSource: {
+          type: 'github',
+          ref: project.link.productionBranch ?? 'main',
+          repoId: project.link.repoId,
+        },
+      }),
+    });
+
+    if (!res.ok) return null;
+    return res.json() as Promise<{ id: string }>;
+  }
+
+  /** Build locally (Vite embeds VITE_* at build time) and upload dist/ to Vercel. */
+  private async deployFromLocalBuild(
+    projectName: string,
+    appPath: string,
+    envVars?: Record<string, string>
+  ): Promise<{ id: string }> {
+    await this.clearProjectBuildSettings(projectName);
+    const distDir = this.buildLocal(appPath, envVars);
+    const files = this.collectFiles(distDir);
+    if (files.length === 0) {
+      throw new Error(`No build output found in ${distDir}`);
+    }
+    return this.createDeploymentFromFiles(projectName, files);
+  }
+
+  /** Prebuilt uploads should not use monorepo rootDirectory — only uploaded files deploy. */
+  private async clearProjectBuildSettings(projectName: string): Promise<void> {
+    const project = await this.getProject(projectName);
+    if (!project) return;
+
+    await fetch(`${VERCEL_API}/v9/projects/${project.id}${this.teamQuery()}`, {
+      method: 'PATCH',
+      headers: this.headers(),
+      body: JSON.stringify({
+        rootDirectory: null,
+        framework: null,
+        buildCommand: null,
+        installCommand: null,
+        outputDirectory: null,
+      }),
+    });
+  }
+
+  private buildLocal(appPath: string, envVars?: Record<string, string>): string {
+    const absPath = resolve(process.cwd(), appPath);
+    const distDir = join(absPath, 'dist');
+    const env = {
+      ...process.env,
+      ...envVars,
+      NODE_ENV: 'development',
+      npm_config_production: 'false',
+    };
+
+    execSync('npm install', { cwd: absPath, env, stdio: 'pipe' });
+    execSync('npm run build', { cwd: absPath, env, stdio: 'pipe' });
+
+    if (!existsSync(distDir)) {
+      throw new Error(`Build did not produce dist/ at ${distDir}`);
+    }
+
+    return distDir;
+  }
+
+  private collectFiles(distDir: string): VercelFile[] {
+    const files: VercelFile[] = [];
+
+    const walk = (dir: string): void => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const fullPath = join(dir, entry.name);
+        if (entry.isDirectory()) {
+          walk(fullPath);
+          continue;
+        }
+
+        const relPath = relative(distDir, fullPath).replace(/\\/g, '/');
+        const buf = readFileSync(fullPath);
+        const ext = extname(entry.name).toLowerCase();
+
+        if (TEXT_EXTENSIONS.has(ext)) {
+          files.push({ file: relPath, data: buf.toString('utf-8'), encoding: 'utf-8' });
+        } else {
+          files.push({ file: relPath, data: buf.toString('base64'), encoding: 'base64' });
+        }
+      }
+    };
+
+    walk(distDir);
+    return files;
+  }
+
+  private async createDeploymentFromFiles(
+    projectName: string,
+    files: VercelFile[]
+  ): Promise<{ id: string }> {
+    const project = await this.getProject(projectName);
+    if (!project) {
+      throw new Error(`Vercel project not found: ${projectName}`);
+    }
+
+    const res = await fetch(`${VERCEL_API}/v13/deployments${this.teamQuery()}`, {
+      method: 'POST',
+      headers: this.headers(),
+      body: JSON.stringify({
+        name: projectName,
+        project: project.id,
+        target: 'production',
+        files,
+        projectSettings: {
+          framework: null,
+          buildCommand: null,
+          installCommand: null,
+          outputDirectory: null,
+          rootDirectory: null,
+        },
       }),
     });
 
     if (!res.ok) {
-      // Fallback: trigger redeploy via project hook
-      const projectRes = await fetch(
-        `${VERCEL_API}/v9/projects/${projectName}${this.teamQuery()}`,
-        { headers: this.headers() }
-      );
-      if (projectRes.ok) {
-        const project = (await projectRes.json()) as { id: string };
-        return { id: project.id };
-      }
       throw new Error(`Vercel deployment failed: ${await res.text()}`);
     }
 
@@ -226,16 +374,27 @@ export class VercelLock implements ProviderLock {
         continue;
       }
 
-      const data = (await res.json()) as { readyState: string; url: string };
-      if (data.readyState === 'READY') return data.url;
+      const data = (await res.json()) as {
+        readyState: string;
+        url: string;
+        alias?: string[];
+        errorMessage?: string;
+      };
+      if (data.readyState === 'READY') {
+        return data.alias?.[0] ?? data.url;
+      }
       if (data.readyState === 'ERROR' || data.readyState === 'CANCELED') {
-        throw new Error(`Vercel deployment ${data.readyState}`);
+        throw new Error(data.errorMessage ?? `Vercel deployment ${data.readyState}`);
       }
 
       await sleep(5000);
     }
     throw new Error('Vercel deployment timed out');
   }
+}
+
+function isPlainEnvVar(key: string): boolean {
+  return key.startsWith('NEXT_PUBLIC_') || key.startsWith('VITE_') || key.startsWith('PUBLIC_');
 }
 
 function mapVercelStatus(state?: string): StatusResult['status'] {

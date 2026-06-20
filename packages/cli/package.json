@@ -1,6 +1,6 @@
 {
-  "name": "@heramb/cli",
-  "version": "0.1.0",
+  "name": "@heramb1/cli",
+  "version": "0.1.1",
   "description": "Heramb CLI — deploy orchestration across any platform",
   "type": "module",
   "bin": {
@@ -14,11 +14,24 @@
   },
   "files": ["dist"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/cli"
+  },
+  "keywords": ["cli", "deploy", "orchestration", "railway", "vercel", "netlify", "upstash", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "@heramb/core": "*",
-    "@heramb/provider-railway": "*",
-    "@heramb/provider-upstash": "*",
-    "@heramb/provider-vercel": "*",
+    "@heramb1/core": "0.1.1",
+    "@heramb1/provider-railway": "0.1.1",
+    "@heramb1/provider-upstash": "0.1.1",
+    "@heramb1/provider-vercel": "0.1.1",
+    "@heramb1/provider-netlify": "0.1.1",
     "chalk": "^5.4.1",
     "commander": "^12.1.0",
     "conf": "^13.0.1",

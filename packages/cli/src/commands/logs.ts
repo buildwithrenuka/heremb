@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { isProviderConfig } from '@heramb/core';
+import { isProviderConfig } from '@heramb1/core';
 import { loadHerambConfig } from '../utils/config.js';
 import { createRegistry } from '../utils/registry.js';
 import { printBanner } from '../utils/output.js';

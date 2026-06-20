@@ -1,6 +1,6 @@
 {
-  "name": "@heramb/core",
-  "version": "0.1.0",
+  "name": "@heramb1/core",
+  "version": "0.1.1",
   "description": "Heramb orchestration engine — dependency graph, provider interface, error handling",
   "type": "module",
   "main": "./dist/index.js",
@@ -17,6 +17,18 @@
   },
   "files": ["dist"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/core"
+  },
+  "keywords": ["deploy", "orchestration", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "ws": "^8.18.0"
   },

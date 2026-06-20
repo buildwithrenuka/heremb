@@ -1,4 +1,4 @@
-import type { CacheLock, DestroyResult } from '@heramb/core';
+import type { CacheLock, DestroyResult } from '@heramb1/core';
 
 const UPSTASH_API = 'https://api.upstash.com/v2/redis/database';
 

@@ -50,4 +50,5 @@ export const FEATURES = [
   },
 ];
 
-export const INSTALL_CMD = 'npx @heramb/cli init && npx @heramb/cli deploy';
+export const INSTALL_CMD = 'npx @heramb1/cli init && npx @heramb1/cli deploy';
+export const NPM_PACKAGE_URL = 'https://www.npmjs.com/package/@heramb1/cli';

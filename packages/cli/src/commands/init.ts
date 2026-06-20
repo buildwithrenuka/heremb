@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { basename } from 'node:path';
-import { buildDeployPlan, providersNeededForPlan } from '@heramb/core';
+import { buildDeployPlan, providersNeededForPlan } from '@heramb1/core';
 import { detectStack } from '../utils/stack-detector.js';
 import { saveHerambConfig, configExists } from '../utils/config.js';
 import { getCredentialsPath } from '../utils/credentials.js';

@@ -1,83 +1,59 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
+import { Link, Outlet } from 'react-router-dom';
+import { NPM_PACKAGE_URL } from '../data/demo';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './Layout.module.css';
 
-export function Layout() {
-  const { pathname } = useLocation();
-  const { user, logout } = useAuth();
-  const isDashboard = pathname.startsWith('/dashboard');
-  const isSettings = pathname.startsWith('/settings');
+const NAV = [
+  { href: '#problem', label: 'Problem' },
+  { href: '#compare', label: 'Why Heramb' },
+  { href: '#usecases', label: 'Use cases' },
+  { href: '#steps', label: 'How to use' },
+  { href: '#install', label: 'Install' },
+];
 
+export function Layout() {
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
         <Link to="/" className={styles.logo}>
-          <span className={styles.logoKey}>🔑</span>
+          <span className={styles.logoMark}>🐘</span>
           <span>Heramb</span>
         </Link>
-        <nav className={styles.nav}>
-          <Link to="/#features" className={styles.navLink}>
-            Features
-          </Link>
-          <Link to="/#install" className={styles.navLink}>
-            Install
-          </Link>
-          <Link to="/guide" className={styles.navLink}>
-            Guide
-          </Link>
-          <Link to="/docs" className={styles.navLink} target="_blank" rel="noreferrer">
-            API
-          </Link>
-          <Link
-            to="/dashboard"
-            className={`${styles.navLink} ${isDashboard ? styles.navActive : ''}`}
-          >
-            Dashboard
-          </Link>
-          {user && (
-            <Link
-              to="/settings"
-              className={`${styles.navLink} ${isSettings ? styles.navActive : ''}`}
-            >
-              Settings
-            </Link>
-          )}
+        <nav className={styles.nav} aria-label="Page sections">
+          {NAV.map((item) => (
+            <a key={item.href} href={item.href} className={styles.navLink}>
+              {item.label}
+            </a>
+          ))}
         </nav>
-
-        {user ? (
-          <div className={styles.userMenu}>
-            {user.avatarUrl ? (
-              <img src={user.avatarUrl} alt="" className={styles.avatar} />
-            ) : (
-              <span className={styles.avatarFallback}>{user.name.charAt(0)}</span>
-            )}
-            <span className={styles.userName}>{user.name}</span>
-            <button type="button" className={styles.logoutBtn} onClick={logout}>
-              Sign out
-            </button>
-          </div>
-        ) : (
-          <Link to="/login" className={styles.cta}>
-            Sign in
-          </Link>
-        )}
+        <div className={styles.headerActions}>
+          <a
+            href={NPM_PACKAGE_URL}
+            className={styles.npmLink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            npm
+          </a>
+          <ThemeToggle />
+          <a href="#install" className={styles.cta}>
+            Get started
+          </a>
+        </div>
       </header>
       <main className={styles.main}>
         <Outlet />
       </main>
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <span className={styles.footerBrand}>Heramb 🔑</span>
-          <span className={styles.footerTagline}>One key. Every platform. Go have chai.</span>
-          <div className={styles.footerLinks}>
-            <Link to="/guide" className={styles.footerLink}>
-              User guide
-            </Link>
-            <a href="/docs" className={styles.footerLink} target="_blank" rel="noreferrer">
-              API docs
+          <span className={styles.footerBrand}>Heramb</span>
+          <span className={styles.footerCopy}>
+            <a href={NPM_PACKAGE_URL} className={styles.footerNpmLink} target="_blank" rel="noreferrer">
+              npm package <code>@heramb1/cli</code>
             </a>
-          </div>
-          <span className={styles.footerCopy}>MIT · CLI + Web UI</span>
+            {' · '}
+            MIT · Not affiliated with any cloud provider
+          </span>
         </div>
       </footer>
     </div>

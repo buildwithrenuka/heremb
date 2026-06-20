@@ -1,7 +1,8 @@
-import type { CacheLock, HerambConfig, ProviderLock, ProviderRegistry } from '@heramb/core';
-import { createRailwayLock } from '@heramb/provider-railway';
-import { createUpstashLock } from '@heramb/provider-upstash';
-import { createVercelLock } from '@heramb/provider-vercel';
+import type { CacheLock, HerambConfig, ProviderLock, ProviderRegistry } from '@heramb1/core';
+import { createRailwayLock } from '@heramb1/provider-railway';
+import { createUpstashLock } from '@heramb1/provider-upstash';
+import { createVercelLock } from '@heramb1/provider-vercel';
+import { createNetlifyLock } from '@heramb1/provider-netlify';
 import { getProviderToken, getProviderCredential } from './credentials.js';
 
 export function createRegistry(config: HerambConfig): ProviderRegistry {
@@ -24,6 +25,11 @@ export function createRegistry(config: HerambConfig): ProviderRegistry {
         const token = getProviderToken('vercel');
         const teamId = getProviderCredential('vercel', 'teamId');
         if (token) locks.set(provider, createVercelLock(token, teamId));
+        break;
+      }
+      case 'netlify': {
+        const token = getProviderToken('netlify');
+        if (token) locks.set(provider, createNetlifyLock(token));
         break;
       }
       case 'upstash': {

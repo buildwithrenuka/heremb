@@ -1,6 +1,6 @@
 import ora from 'ora';
 import chalk from 'chalk';
-import { Orchestrator, isProviderConfig } from '@heramb/core';
+import { Orchestrator, isProviderConfig } from '@heramb1/core';
 import { loadHerambConfig, saveHerambConfig } from '../utils/config.js';
 import { createRegistry } from '../utils/registry.js';
 import { applyPreviewContext, resolveBranch, type DeployEnv } from '../utils/preview.js';
@@ -76,7 +76,11 @@ export async function deployCommand(options: DeployCommandOptions = {}): Promise
       if (isProviderConfig(svc) && !svc.serviceId && !svc.projectId) {
         svc.serviceId = id;
         configUpdated = true;
-      } else if (isProviderConfig(svc) && svc.provider === 'vercel' && !svc.projectId) {
+      } else if (
+        isProviderConfig(svc) &&
+        (svc.provider === 'vercel' || svc.provider === 'netlify') &&
+        !svc.projectId
+      ) {
         svc.projectId = id;
         configUpdated = true;
       }

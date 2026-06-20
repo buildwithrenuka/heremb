@@ -1,5 +1,5 @@
 import Conf from 'conf';
-import type { Credentials } from '@heramb/core';
+import type { Credentials } from '@heramb1/core';
 
 const store = new Conf<{ keys: Credentials }>({
   projectName: 'heramb',

@@ -6,7 +6,7 @@ import type {
   EnvVarResult,
   ProviderLock,
   StatusResult,
-} from '@heramb/core';
+} from '@heramb1/core';
 
 const RAILWAY_API = 'https://backboard.railway.app/graphql/v2';
 
@@ -204,10 +204,14 @@ export class RailwayLock implements ProviderLock {
         }
       `;
 
+      const projectId = await this.getProjectIdForService(serviceId);
+      const environmentId = await this.getEnvironmentIdForService(serviceId);
+
       await this.client.request(query, {
         input: {
-          projectId: await this.getProjectIdForService(serviceId),
+          projectId,
           serviceId,
+          environmentId,
           variables: vars,
           replace: false,
         },

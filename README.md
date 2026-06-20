@@ -10,11 +10,11 @@ Heramb is a deployment orchestration **CLI + web dashboard** that deploys your f
 
 ```bash
 # Run without installing globally
-npx @heramb/cli init
-npx @heramb/cli deploy
+npx @heramb1/cli init
+npx @heramb1/cli deploy
 
 # Or install globally
-npm install -g @heramb/cli
+npm install -g @heramb1/cli
 heramb deploy
 ```
 
@@ -34,9 +34,13 @@ npm run build        # Builds CLI + web for production
 | `/settings` | Provider tokens + optional OpenAI key (protected) |
 | `/login` | Email/password + GitHub/Google OAuth |
 
-**Documentation:** [User guide](./docs/README.md) · API docs at `/docs` when the API is running
+**Documentation:** [User guide](./docs/user-guide.md) · [Docs index](./docs/README.md) · API docs at `/docs` when the API is running
 
-Deploy the web app to Vercel/Netlify from `packages/web/dist` after `npm run build -w @heramb/web`.
+Deploy the web app to Vercel/Netlify/Cloudflare Pages from `packages/web/dist` after `npm run build -w @heramb1/web`.
+
+**Cloudflare Pages (live):** [https://heramb.pages.dev](https://heramb.pages.dev) · User guide: [https://heramb.pages.dev/guide](https://heramb.pages.dev/guide)
+
+Redeploy: `npm run deploy:web`
 
 ### Auth (JWT + OAuth)
 
@@ -77,7 +81,7 @@ npm install
 npm run build
 
 # Link CLI globally (optional)
-npm link -w @heramb/cli
+npm link -w @heramb1/cli
 
 # In your app repo
 heramb init      # detect stack, create config, store tokens
@@ -141,7 +145,7 @@ Credentials are stored in `~/.heramb/keys.json`.
 ```
 packages/
 ├── core/              # Orchestration engine, dependency graph, error table
-├── cli/               # Commander CLI (@heramb/cli on npm)
+├── cli/               # Commander CLI (@heramb1/cli on npm)
 ├── api/               # Hono auth API + Scalar docs
 ├── web/               # Landing page + deployment dashboard (React)
 └── providers/

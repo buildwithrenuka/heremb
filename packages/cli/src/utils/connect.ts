@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import type { StackDetection } from '@heramb/core';
-import { buildDeployPlan, getProvider, providersNeededForPlan, topProviderForRole, deriveRequirements } from '@heramb/core';
+import type { StackDetection } from '@heramb1/core';
+import { buildDeployPlan, getProvider, providersNeededForPlan, topProviderForRole, deriveRequirements } from '@heramb1/core';
 import { saveCredential, getProviderToken } from './credentials.js';
 
 export async function connectProviders(

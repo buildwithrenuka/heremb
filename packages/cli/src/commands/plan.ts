@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { buildDeployPlan } from '@heramb/core';
+import { buildDeployPlan } from '@heramb1/core';
 import { detectStack } from '../utils/stack-detector.js';
 import { printBanner } from '../utils/output.js';
 

@@ -11,15 +11,17 @@
     "packages/providers/*"
   ],
   "scripts": {
-    "build": "npm run build -w @heramb/core && npm run build -w @heramb/provider-railway -w @heramb/provider-vercel -w @heramb/provider-upstash && npm run build -w @heramb/cli && npm run build -w @heramb/api && npm run build -w @heramb/web",
+    "build": "npm run build -w @heramb1/core && npm run build -w @heramb1/provider-railway -w @heramb1/provider-vercel -w @heramb1/provider-upstash -w @heramb1/provider-netlify && npm run build -w @heramb1/cli && npm run build -w @heramb1/api && npm run build -w @heramb1/web",
     "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev:api\" \"npm run dev:web\"",
-    "dev:web": "npm run dev -w @heramb/web",
-    "dev:api": "npm run dev -w @heramb/api",
+    "dev:web": "npm run dev -w @heramb1/web",
+    "dev:api": "npm run dev -w @heramb1/api",
     "dev:all": "npm run dev",
-    "dev:cli": "npm run dev -w @heramb/cli",
+    "dev:cli": "npm run dev -w @heramb1/cli",
     "heramb": "node packages/cli/dist/index.js",
     "test": "npm run build && tsx --test tests/**/*.test.ts",
-    "test:deploy": "npm run build && tsx tests/demo-deploy.ts"
+    "test:deploy": "npm run build && tsx tests/demo-deploy.ts",
+    "publish:packages": "npm run build && npm publish -w @heramb1/core --access public && npm publish -w @heramb1/provider-railway --access public && npm publish -w @heramb1/provider-vercel --access public && npm publish -w @heramb1/provider-upstash --access public && npm publish -w @heramb1/provider-netlify --access public && npm publish -w @heramb1/cli --access public",
+    "deploy:web": "npm run build -w @heramb1/web && npx wrangler pages deploy packages/web/dist --project-name=heramb"
   },
   "engines": {
     "node": ">=18"

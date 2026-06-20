@@ -4,8 +4,8 @@
     "backend": {
       "provider": "railway",
       "path": "./backend",
-      "projectId": "b2a695a4-cc9b-4be0-8eee-63da348b87c8",
-      "serviceId": "46754efa-040b-4351-98d7-571d4c52138b",
+      "projectId": "5c0a1315-a12f-437f-930c-d2727b56d132",
+      "serviceId": "bfae7bce-994b-49c2-8852-8d2533cf093b",
       "needs": [],
       "produces": ["BACKEND_URL"]
     },

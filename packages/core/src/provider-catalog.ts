@@ -120,7 +120,7 @@ export const PROVIDER_CATALOG: ProviderCapabilities[] = [
     id: 'netlify',
     name: 'Netlify',
     roles: ['frontend', 'backend'],
-    implemented: false,
+    implemented: true,
     websocket: 'limited',
     managedRedis: false,
     longRunningServer: false,

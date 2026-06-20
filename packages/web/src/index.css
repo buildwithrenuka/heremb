@@ -1,19 +1,97 @@
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Solid surfaces in light mode — no backdrop blur (keeps text sharp) */
+  --bg: #f0ebe3;
+  --bg-elevated: #f7f4ee;
+  --bg-card: #f7f4ee;
+  --glass-bg: #f7f4ee;
+  --glass-bg-strong: #fcfaf6;
+  --glass-border: rgba(90, 85, 75, 0.14);
+  --glass-border-hover: rgba(90, 101, 120, 0.3);
+  --glass-blur: none;
+  --border: rgba(90, 85, 75, 0.12);
+  --text: #3d4248;
+  --text-muted: #5f656d;
+  --accent: #5a6578;
+  --accent-bright: #6b7789;
+  --accent-deep: #4a5568;
+  --accent-light: #8a96a6;
+  --accent-glow: rgba(90, 101, 120, 0.12);
+  --accent-soft: #7d8999;
+  --accent-muted: rgba(90, 101, 120, 0.14);
+  --accent-subtle: #ebe8e1;
+  --code-bg: #e8e4dc;
+  --code-text: #525860;
+  --code-header-bg: rgba(90, 85, 75, 0.06);
+  --code-header-text: #7a8088;
+  --code-border: rgba(90, 85, 75, 0.14);
+  --btn-text: #faf8f5;
+  --btn-border: rgba(255, 255, 255, 0.15);
+  --shell-glow-1: rgba(180, 170, 155, 0.12);
+  --shell-glow-2: rgba(160, 175, 190, 0.08);
+  --shell-glow-3: rgba(140, 135, 125, 0.06);
+  --header-bg: #f0ebe3;
+  --footer-bg: #f7f4ee;
+  --shadow-sm: 0 1px 2px rgba(80, 75, 65, 0.04);
+  --shadow-md: 0 4px 16px rgba(80, 75, 65, 0.06);
+  --shadow-lg: 0 6px 24px rgba(80, 75, 65, 0.07);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --selection-bg: rgba(107, 119, 137, 0.18);
+  --success: #3d7a52;
+  --error: #b54a4a;
+  --heading-weight: 700;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #060b14;
+  --bg-elevated: #0c1424;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-hover: rgba(110, 168, 254, 0.35);
+  --glass-blur: blur(20px);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #e8edf5;
+  --text-muted: #8b9cb8;
+  --accent: #6ea8fe;
+  --accent-bright: #93c5fd;
+  --accent-deep: #1e3a5f;
+  --accent-light: #bfdbfe;
+  --accent-glow: rgba(110, 168, 254, 0.25);
+  --accent-soft: #3b6cb5;
+  --accent-muted: rgba(110, 168, 254, 0.12);
+  --accent-subtle: rgba(110, 168, 254, 0.06);
+  --code-bg: rgba(0, 0, 0, 0.45);
+  --code-text: #a8c4e8;
+  --code-header-bg: rgba(255, 255, 255, 0.06);
+  --code-header-text: rgba(255, 255, 255, 0.55);
+  --code-border: rgba(255, 255, 255, 0.1);
+  --btn-text: #ffffff;
+  --btn-border: rgba(255, 255, 255, 0.12);
+  --shell-glow-1: rgba(30, 58, 95, 0.45);
+  --shell-glow-2: rgba(59, 108, 181, 0.2);
+  --shell-glow-3: rgba(15, 33, 71, 0.35);
+  --header-bg: rgba(6, 11, 20, 0.72);
+  --footer-bg: rgba(6, 11, 20, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --selection-bg: rgba(110, 168, 254, 0.25);
+  --success: #4ade80;
+  --error: #f87171;
+  --heading-weight: 800;
+}
+
 :root {
-  --bg: #0f0d0a;
-  --bg-elevated: #1a1612;
-  --bg-card: #221c16;
-  --border: rgba(255, 200, 120, 0.12);
-  --text: #f5ebe0;
-  --text-muted: #a89888;
-  --accent: #e8a838;
-  --accent-glow: rgba(232, 168, 56, 0.25);
-  --accent-soft: #c4892a;
-  --success: #6bc98a;
-  --error: #e86a6a;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'DM Sans', system-ui, sans-serif;
-  --radius: 12px;
-  --radius-lg: 20px;
+  --radius: 14px;
+  --radius-lg: 22px;
 }
 
 *,
@@ -31,8 +109,20 @@ body {
   font-family: var(--sans);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+[data-theme='light'] body {
+  line-height: 1.7;
+  letter-spacing: normal;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
 }
 
 #root {
@@ -55,6 +145,6 @@ pre {
 }
 
 ::selection {
-  background: var(--accent-glow);
+  background: var(--selection-bg);
   color: var(--text);
 }

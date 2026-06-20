@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-import { isProviderConfig } from '@heramb/core';
+import { isProviderConfig } from '@heramb1/core';
 import { loadHerambConfig } from '../utils/config.js';
 import { createRegistry } from '../utils/registry.js';
 import { printBanner } from '../utils/output.js';

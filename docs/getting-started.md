@@ -10,11 +10,11 @@
 
 ```bash
 # Run without installing globally
-npx @heramb/cli init
-npx @heramb/cli deploy
+npx @heramb1/cli init
+npx @heramb1/cli deploy
 
 # Or install globally
-npm install -g @heramb/cli
+npm install -g @heramb1/cli
 heramb deploy
 ```
 

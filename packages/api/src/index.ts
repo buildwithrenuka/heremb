@@ -38,7 +38,21 @@ const app = new Hono();
 app.use(
   '*',
   cors({
-    origin: [env.WEB_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin) => {
+      const allowed = new Set([
+        env.WEB_URL,
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+      ]);
+      if (!origin) return env.WEB_URL;
+      if (allowed.has(origin)) return origin;
+      try {
+        if (new URL(origin).hostname.endsWith('.vercel.app')) return origin;
+      } catch {
+        /* ignore invalid origin */
+      }
+      return null;
+    },
     allowHeaders: ['Content-Type', 'Authorization'],
     allowMethods: ['GET', 'POST', 'OPTIONS'],
   })

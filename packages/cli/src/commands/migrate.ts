@@ -1,11 +1,11 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { isProviderConfig } from '@heramb/core';
+import { isProviderConfig } from '@heramb1/core';
 import { loadHerambConfig, saveHerambConfig } from '../utils/config.js';
 import { printBanner } from '../utils/output.js';
 
-const IMPLEMENTED_PROVIDERS = ['railway', 'vercel', 'upstash'];
-const PLANNED_PROVIDERS = ['render', 'netlify', 'fly', 'heroku', 'cloudflare-pages'];
+const IMPLEMENTED_PROVIDERS = ['railway', 'vercel', 'upstash', 'netlify'];
+const PLANNED_PROVIDERS = ['render', 'fly', 'heroku', 'cloudflare-pages'];
 
 export interface MigrateOptions {
   service?: string;

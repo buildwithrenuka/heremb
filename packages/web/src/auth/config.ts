@@ -12,9 +12,10 @@ export function getOAuthBase(): string {
 
 export class ApiConnectionError extends Error {
   constructor() {
-    super(
-      'Cannot reach Heramb API. Start it with: npm run dev:all (or npm run dev:api in another terminal)'
-    );
+    const hint = import.meta.env.DEV
+      ? 'Start it with: npm run dev:all (or npm run dev:api in another terminal)'
+      : 'Check that the API is running and CORS allows your frontend URL (run heramb deploy to sync WEB_URL)';
+    super(`Cannot reach Heramb API. ${hint}`);
     this.name = 'ApiConnectionError';
   }
 }

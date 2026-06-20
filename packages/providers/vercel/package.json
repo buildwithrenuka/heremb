@@ -1,6 +1,6 @@
 {
-  "name": "@heramb/provider-vercel",
-  "version": "0.1.0",
+  "name": "@heramb1/provider-vercel",
+  "version": "0.1.1",
   "description": "Vercel lock — REST API driver for Heramb",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,8 +16,20 @@
   },
   "files": ["dist"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/providers/vercel"
+  },
+  "keywords": ["deploy", "vercel", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "@heramb/core": "*"
+    "@heramb1/core": "0.1.1"
   },
   "devDependencies": {
     "typescript": "^5.7.2"

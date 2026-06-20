@@ -1,4 +1,4 @@
-import type { HerambConfig } from '@heramb/core';
+import type { HerambConfig } from '@heramb1/core';
 
 export type DeployEnv = 'production' | 'preview';
 

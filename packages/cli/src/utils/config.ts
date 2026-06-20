@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { loadConfig, type HerambConfig } from '@heramb/core';
+import { loadConfig, type HerambConfig } from '@heramb1/core';
 
 const CONFIG_FILE = 'heramb.config.json';
 

@@ -1,6 +1,6 @@
 {
-  "name": "@heramb/provider-railway",
-  "version": "0.1.0",
+  "name": "@heramb1/provider-railway",
+  "version": "0.1.1",
   "description": "Railway lock — GraphQL API driver for Heramb",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,8 +16,20 @@
   },
   "files": ["dist"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/providers/railway"
+  },
+  "keywords": ["deploy", "railway", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "@heramb/core": "*",
+    "@heramb1/core": "0.1.1",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.2"
   },

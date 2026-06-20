@@ -1,0 +1,38 @@
+{
+  "name": "@heramb1/provider-netlify",
+  "version": "0.1.1",
+  "description": "Netlify lock — REST API driver for Heramb",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": ["dist"],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/heremb.git",
+    "directory": "packages/providers/netlify"
+  },
+  "keywords": ["deploy", "netlify", "heramb"],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@heramb1/core": "0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

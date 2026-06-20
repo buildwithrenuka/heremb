@@ -1,6 +1,6 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import type { HerambConfig, StackDetection } from '@heramb/core';
+import type { HerambConfig, StackDetection } from '@heramb1/core';
 
 export function detectStack(cwd = process.cwd()): StackDetection {
   const result: StackDetection = { warnings: [] };

@@ -4,6 +4,8 @@
     "backend": {
       "provider": "railway",
       "path": "./packages/api",
+      "projectId": "b2a695a4-cc9b-4be0-8eee-63da348b87c8",
+      "serviceId": "46754efa-040b-4351-98d7-571d4c52138b",
       "needs": [],
       "produces": [
         "BACKEND_URL"
@@ -17,7 +19,9 @@
       ],
       "produces": [
         "FRONTEND_URL"
-      ]
+      ],
+      "serviceId": "heramb-frontend",
+      "projectId": "heramb-frontend"
     },
     "backend-cors": {
       "action": "patch-env",

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { testWebSocket } from '@heramb/core';
+import { testWebSocket } from '@heramb1/core';
 import { loadHerambConfig } from '../utils/config.js';
 import { printBanner } from '../utils/output.js';
 

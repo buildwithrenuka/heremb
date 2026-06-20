@@ -8,8 +8,8 @@ import {
   validateProviderChoice,
   recommendForRole,
   getProvider,
-} from '@heramb/core';
-import type { HerambConfig, StackDetection } from '@heramb/core';
+} from '@heramb1/core';
+import type { HerambConfig, StackDetection } from '@heramb1/core';
 
 export async function pickProviders(plan: DeployPlan): Promise<Record<ServiceRole, string>> {
   const choices = {} as Record<ServiceRole, string>;

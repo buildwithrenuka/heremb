@@ -41,7 +41,7 @@ Tokens entered here are stored in your browser session and used by the dashboard
 Build and deploy the static SPA:
 
 ```bash
-npm run build -w @heramb/web
+npm run build -w @heramb1/web
 # Deploy packages/web/dist to Vercel, Netlify, etc.
 ```
 

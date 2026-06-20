@@ -6,6 +6,7 @@ Welcome to Heramb — the deployment orchestration CLI and web dashboard that wi
 
 | Guide | Description |
 |-------|-------------|
+| [**User guide (Hindi + English)**](./user-guide.md) | `@heramb1/cli` npm package — install se deploy tak |
 | [Getting started](./getting-started.md) | Install, first deploy, dev setup |
 | [CLI reference](./cli.md) | All `heramb` commands |
 | [Web dashboard](./web-dashboard.md) | Routes, settings, provider tokens |

@@ -1,0 +1,41 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+[data-theme='light'] .toggle {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.toggle:hover {
+  border-color: var(--glass-border-hover);
+  color: var(--accent-bright);
+  background: var(--glass-bg-strong);
+}
+
+.icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.label {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .label {
+    display: inline;
+  }
+}
