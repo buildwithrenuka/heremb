@@ -1,0 +1,29 @@
+{
+  "project": "heramb-demo",
+  "services": {
+    "backend": {
+      "provider": "railway",
+      "path": "./backend",
+      "projectId": "b2a695a4-cc9b-4be0-8eee-63da348b87c8",
+      "serviceId": "46754efa-040b-4351-98d7-571d4c52138b",
+      "needs": [],
+      "produces": ["BACKEND_URL"]
+    },
+    "frontend": {
+      "provider": "vercel",
+      "path": "./frontend",
+      "projectId": "heramb-demo",
+      "needs": ["VITE_API_URL"],
+      "produces": ["FRONTEND_URL"]
+    },
+    "backend-cors": {
+      "action": "patch-env",
+      "target": "backend",
+      "vars": { "CORS_ORIGIN": "FRONTEND_URL" },
+      "then": "redeploy"
+    }
+  },
+  "env": {
+    "manual": []
+  }
+}
